@@ -70,6 +70,7 @@ public class Main {
             featureBuilder.add(Integer.parseInt(data[3]));
             SimpleFeature feature = featureBuilder.buildFeature(null);
             collection.add(feature);
+
         }
 
         //	}
