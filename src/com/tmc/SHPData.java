@@ -12,11 +12,26 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.geometry.MismatchedDimensionException;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.NoSuchAuthorityCodeException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
+import org.opengis.referencing.operation.TransformException;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.PrecisionModel;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -62,13 +77,98 @@ public class SHPData {
         }
     }
 
-    public void processPointList() {
-        //TODO: przetwarzanie punktów na postawie danych z plików csv
+    public void processPointList() throws IOException, NoSuchAuthorityCodeException, FactoryException, Exception, TransformException {
 
-        //Wyznaczenie pogody dla parametrów pobranych w plików CSV
+    	//wiem ze glupio to wyglada ale nie ogarniam sciezek w tych katalogach javy
+    	//pozniej chyba trzeba bedzie zmienic to na pobieranie z servera, 
+    	//ale poki co tak moze byc
+    	 String tempMax2m = "E:/Projekty/TMC/projekt/TMAX2m.csv";
+    	 String lowCloudFrac = "E:/Projekty/TMC/projekt/LOW_CLOUD_FRACTION.csv";
+    	 String midCloudFrac = "E:/Projekty/TMC/projekt/MID_CLOUD_FRACTION.csv";
+    	 String highCloudFrac = "E:/Projekty/TMC/projekt/HIGH_CLOUD_FRACTION.csv";
+    	 
+    	 BufferedReader br = null;
+         String line = "";
+         String cvsSplitBy = ";";
+         
+         String[][] temperature = new String[170][325];
+         String[][] lowCloud = new String[170][325];
+         String[][] midCloud = new String[170][325];
+         String[][] highCloud = new String[170][325];
+         
+         br = new BufferedReader(new FileReader(tempMax2m));
+         int i = 0;
+         
+         //sorki za to copy paste z while, nie radze sobie jeszcze na tyle z java XD
+         //uzupelnianie tablic dla temp i chmurek danymi z csv
+         while ((line = br.readLine()) != null) {
+        	 String[] splitedLine = line.split(cvsSplitBy);
+        	 temperature[i] = splitedLine;
+        	 i++;
+         }
+         
+         br = new BufferedReader(new FileReader(lowCloudFrac));
+         i = 0;
+         
+         while ((line = br.readLine()) != null) {
+        	 String[] splitedLine = line.split(cvsSplitBy);
+        	 lowCloud[i] = splitedLine;
+        	 i++;
+         }
+         
+         br = new BufferedReader(new FileReader(midCloudFrac));
+         i = 0;
+         
+         while ((line = br.readLine()) != null) {
+        	 String[] splitedLine = line.split(cvsSplitBy);
+        	 midCloud[i] = splitedLine;
+        	 i++;
+         }
+         
+         br = new BufferedReader(new FileReader(highCloudFrac));
+         i = 0;
+         
+         while ((line = br.readLine()) != null) {
+        	 String[] splitedLine = line.split(cvsSplitBy);
+        	 highCloud[i] = splitedLine;
+        	 i++;
+         }
+
         for (PointFeature point : pointFeatureList) {
             point.setWeather();
-            point.setTemperature(point.getTemperature() + 2.42);
+            
+            Point p = point.getPoint();
+            
+            //konwersja miedzy projekcjami
+            CoordinateReferenceSystem sourceCRS = CRS.decode("EPSG:3857");
+            CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
+            MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
+            GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
+            Point point2 = geometryFactory.createPoint(new Coordinate(p.getX(), p.getY()));
+            Point targetPoint = (Point) JTS.transform(point2, transform);
+            
+            //x, y to wyliczone indeksy dla csv na podstawie wspolrzednych
+            int x = (int)((targetPoint.getX() - 48.802824)/0.0378444945891919);
+            int y = (int)((targetPoint.getY() - 13.236774)/0.0378444945891919);
+           
+            //temperaturka, wolalem zabezpieczyc zeby sie nic nie wysypalo
+            if(!temperature[x][y].equals("-9.99e+08")) {
+            	point.setTemperature(Double.parseDouble(temperature[x][y]) - 273);
+            }
+            else {
+            	point.setTemperature(Double.parseDouble("-9.99e+08"));
+            }
+            
+            //chmurki
+            WeatherParams wp = new WeatherParams();
+            wp.setLowCloudFrac(Float.parseFloat(lowCloud[x][y]));
+            wp.setMedCloudFrac(Float.parseFloat(midCloud[x][y]));
+            wp.setHighCloudFrac(Float.parseFloat(highCloud[x][y]));
+            
+            point.setWeatherParams(wp);
+            
+            //wypisuje wspolrzedne ktore mozna sprawdzic na google (normalne w stopniach)
+            System.out.println(targetPoint.getX() + " " + targetPoint.getY());
         }
     }
 
