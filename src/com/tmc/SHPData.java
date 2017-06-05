@@ -74,8 +74,9 @@ public class SHPData {
             throws IOException, FactoryException, Exception, TransformException {
 
     	//tu trzeba sciezke bezwgledna niestety podac, przynajmniej mi sie nie udalo ze wzgledna
-    	String saveDir = "E:/Projekty/TMC/projekt/tmc";
-    	
+//    	String saveDir = "E:/Projekty/TMC/projekt/tmc";
+    	String saveDir = ".";
+
         downloadAllCsv(saveDir);
         
         String tempMax2m = "TMAX2m.csv";

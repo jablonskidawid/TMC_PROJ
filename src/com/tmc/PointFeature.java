@@ -52,8 +52,7 @@ public class PointFeature {
     }
 
     public void setTemperature(double temperature) {
-        double tempRound = (double) Math.round(temperature * 100) / 100;
-        // double tempRound = (double) Math.round(temperature);
+        double tempRound = (double) Math.round(temperature);
         String tempstr = String.valueOf(tempRound);
         simpleFeature.setAttribute("temp", tempstr);
     }
