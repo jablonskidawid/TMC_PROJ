@@ -73,6 +73,11 @@ public class SHPData {
     public void processPointList()
             throws IOException, FactoryException, Exception, TransformException {
 
+    	//tu trzeba sciezke bezwgledna niestety podac, przynajmniej mi sie nie udalo ze wzgledna
+    	String saveDir = "E:/Projekty/TMC/projekt/tmc";
+    	
+        downloadAllCsv(saveDir);
+        
         String tempMax2m = "TMAX2m.csv";
         String lowCloudFrac = "LOW_CLOUD_FRACTION.csv";
         String midCloudFrac = "MID_CLOUD_FRACTION.csv";
@@ -81,7 +86,7 @@ public class SHPData {
 
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ";";
+        String cvsSplitBy = ",";
 
         String[][] temperature = new String[170][325];
         String[][] lowCloud = new String[170][325];
@@ -129,6 +134,34 @@ public class SHPData {
         }
     }
 
+    public void downloadAllCsv(String saveDir) {
+    	try {
+        	HttpCsvDownloader.downloadFile("http://www.ksgmet.eti.pg.gda.pl/prognozy/CSV/poland/2017/6/5/20/TMAX2m.csv", saveDir);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    	try {
+        	HttpCsvDownloader.downloadFile("http://www.ksgmet.eti.pg.gda.pl/prognozy/CSV/poland/2017/6/5/20/LOW_CLOUD_FRACTION.csv", saveDir);
+    	} catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    	try {
+        	HttpCsvDownloader.downloadFile("http://www.ksgmet.eti.pg.gda.pl/prognozy/CSV/poland/2017/6/5/20/MID_CLOUD_FRACTION.csv", saveDir);
+    	} catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    	try {
+        	HttpCsvDownloader.downloadFile("http://www.ksgmet.eti.pg.gda.pl/prognozy/CSV/poland/2017/6/5/20/HIGH_CLOUD_FRACTION.csv", saveDir);
+    	} catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    	try {
+        	HttpCsvDownloader.downloadFile("http://www.ksgmet.eti.pg.gda.pl/prognozy/CSV/poland/2017/6/5/20/ACM_TOTAL_PERCIP.csv", saveDir);
+    	} catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public void fillCloudAndAcmArrays(BufferedReader br, String tempMax2m, String lowCloudFrac, String midCloudFrac,
                                       String highCloudFrac, String acmTotalPercip, String line, String cvsSplitBy, String[][] temperature,
                                       String[][] lowCloud, String[][] midCloud, String[][] highCloud, String[][] acmTotal) throws IOException {
