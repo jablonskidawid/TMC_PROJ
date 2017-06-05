@@ -44,211 +44,225 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class SHPData {
 
-    private SimpleFeatureType simpleFeatureType;
-    private List<PointFeature> pointFeatureList;
+	private SimpleFeatureType simpleFeatureType;
+	private List<PointFeature> pointFeatureList;
 
-    public SHPData(String filename) throws Exception {
-        pointFeatureList = new ArrayList<>();
+	public SHPData(String filename) throws Exception {
+		pointFeatureList = new ArrayList<>();
 
-        File file = new File(filename);
-        if (!file.exists()) throw new Exception("File not found");
-        Map<String, URL> map = new HashMap<>();
-        map.put("url", file.toURI().toURL());
+		File file = new File(filename);
+		if (!file.exists())
+			throw new Exception("File not found");
+		Map<String, URL> map = new HashMap<>();
+		map.put("url", file.toURI().toURL());
 
-        DataStore dataStore = DataStoreFinder.getDataStore(map);
-        SimpleFeatureSource featureSource = dataStore.getFeatureSource(dataStore.getTypeNames()[0]);
-        SimpleFeatureIterator iterator = featureSource.getFeatures().features();
-        simpleFeatureType = featureSource.getSchema();
-        try {
-            while (iterator.hasNext()) {
-                SimpleFeature feature = iterator.next();
-                PointFeature pointFeature = new PointFeature();
-                pointFeature.setSimpleFeature(feature);
-                pointFeatureList.add(pointFeature);
-            }
-        } catch (Exception e) {
-            System.err.println("Invalid fields or values in shapefile " + filename);
-            e.printStackTrace();
-        } finally {
-            iterator.close();
-        }
-    }
+		DataStore dataStore = DataStoreFinder.getDataStore(map);
+		SimpleFeatureSource featureSource = dataStore.getFeatureSource(dataStore.getTypeNames()[0]);
+		SimpleFeatureIterator iterator = featureSource.getFeatures().features();
+		simpleFeatureType = featureSource.getSchema();
+		try {
+			while (iterator.hasNext()) {
+				SimpleFeature feature = iterator.next();
+				PointFeature pointFeature = new PointFeature();
+				pointFeature.setSimpleFeature(feature);
+				pointFeatureList.add(pointFeature);
+			}
+		} catch (Exception e) {
+			System.err.println("Invalid fields or values in shapefile " + filename);
+			e.printStackTrace();
+		} finally {
+			iterator.close();
+		}
+	}
 
-    public void processPointList() throws IOException, NoSuchAuthorityCodeException, FactoryException, Exception, TransformException {
+	public void processPointList()
+			throws IOException, NoSuchAuthorityCodeException, FactoryException, Exception, TransformException {
 
-    	//wiem ze glupio to wyglada ale nie ogarniam sciezek w tych katalogach javy
-    	//pozniej chyba trzeba bedzie zmienic to na pobieranie z servera, 
-    	//ale poki co tak moze byc
-    	 String tempMax2m = "E:/Projekty/TMC/projekt/TMAX2m.csv";
-    	 String lowCloudFrac = "E:/Projekty/TMC/projekt/LOW_CLOUD_FRACTION.csv";
-    	 String midCloudFrac = "E:/Projekty/TMC/projekt/MID_CLOUD_FRACTION.csv";
-    	 String highCloudFrac = "E:/Projekty/TMC/projekt/HIGH_CLOUD_FRACTION.csv";
-    	 
-    	 BufferedReader br = null;
-         String line = "";
-         String cvsSplitBy = ";";
-         
-         String[][] temperature = new String[170][325];
-         String[][] lowCloud = new String[170][325];
-         String[][] midCloud = new String[170][325];
-         String[][] highCloud = new String[170][325];
-         
-         br = new BufferedReader(new FileReader(tempMax2m));
-         int i = 0;
-         
-         //sorki za to copy paste z while, nie radze sobie jeszcze na tyle z java XD
-         //uzupelnianie tablic dla temp i chmurek danymi z csv
-         while ((line = br.readLine()) != null) {
-        	 String[] splitedLine = line.split(cvsSplitBy);
-        	 temperature[i] = splitedLine;
-        	 i++;
-         }
-         
-         br = new BufferedReader(new FileReader(lowCloudFrac));
-         i = 0;
-         
-         while ((line = br.readLine()) != null) {
-        	 String[] splitedLine = line.split(cvsSplitBy);
-        	 lowCloud[i] = splitedLine;
-        	 i++;
-         }
-         
-         br = new BufferedReader(new FileReader(midCloudFrac));
-         i = 0;
-         
-         while ((line = br.readLine()) != null) {
-        	 String[] splitedLine = line.split(cvsSplitBy);
-        	 midCloud[i] = splitedLine;
-        	 i++;
-         }
-         
-         br = new BufferedReader(new FileReader(highCloudFrac));
-         i = 0;
-         
-         while ((line = br.readLine()) != null) {
-        	 String[] splitedLine = line.split(cvsSplitBy);
-        	 highCloud[i] = splitedLine;
-        	 i++;
-         }
+		String tempMax2m = "TMAX2m.csv";
+		String lowCloudFrac = "LOW_CLOUD_FRACTION.csv";
+		String midCloudFrac = "MID_CLOUD_FRACTION.csv";
+		String highCloudFrac = "HIGH_CLOUD_FRACTION.csv";
+		String acmTotalPercip = "ACM_TOTAL_PERCIP.csv";
 
-        for (PointFeature point : pointFeatureList) {
-            point.setWeather();
-            
-            Point p = point.getPoint();
-            
-            //konwersja miedzy projekcjami
-            CoordinateReferenceSystem sourceCRS = CRS.decode("EPSG:3857");
-            CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
-            MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
-            GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
-            Point point2 = geometryFactory.createPoint(new Coordinate(p.getX(), p.getY()));
-            Point targetPoint = (Point) JTS.transform(point2, transform);
-            
-            //x, y to wyliczone indeksy dla csv na podstawie wspolrzednych
-            int x = (int)((targetPoint.getX() - 48.802824)/0.0378444945891919);
-            int y = (int)((targetPoint.getY() - 13.236774)/0.0378444945891919);
-           
-            //temperaturka, wolalem zabezpieczyc zeby sie nic nie wysypalo
-            if(!temperature[x][y].equals("-9.99e+08")) {
-            	point.setTemperature(Double.parseDouble(temperature[x][y]) - 273);
-            }
-            else {
-            	point.setTemperature(Double.parseDouble("-9.99e+08"));
-            }
-            
-            //chmurki
-            WeatherParams wp = new WeatherParams();
-            wp.setLowCloudFrac(Float.parseFloat(lowCloud[x][y]));
-            wp.setMedCloudFrac(Float.parseFloat(midCloud[x][y]));
-            wp.setHighCloudFrac(Float.parseFloat(highCloud[x][y]));
-            
-            point.setWeatherParams(wp);
-            
-            //wypisuje wspolrzedne ktore mozna sprawdzic na google (normalne w stopniach)
-            System.out.println(targetPoint.getX() + " " + targetPoint.getY());
-        }
-    }
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
 
-    public void savePointsToSHP(String filename) {
-        try {
-            File file = new File(filename);
-            if (file.exists()) {
-                copyAndRemoveSHP(filename);
-            }
+		String[][] temperature = new String[170][325];
+		String[][] lowCloud = new String[170][325];
+		String[][] midCloud = new String[170][325];
+		String[][] highCloud = new String[170][325];
+		String[][] acmTotal = new String[170][325];
 
-            SimpleFeatureCollection collection = FeatureCollections.newCollection();
-            SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(simpleFeatureType);
+		fillCloudAndAcmArrays(br, tempMax2m, lowCloudFrac, midCloudFrac, highCloudFrac,
+				acmTotalPercip, line, cvsSplitBy, temperature, lowCloud, midCloud,
+				highCloud, acmTotal);
+		
+		for (PointFeature point : pointFeatureList) {
+			Point p = point.getPoint();
 
-            for (PointFeature point : pointFeatureList) {
-                collection.add(point.getSimpleFeature());
-            }
+			// konwersja miedzy projekcjami
+			CoordinateReferenceSystem sourceCRS = CRS.decode("EPSG:3857");
+			CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
+			MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
+			GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
+			Point point2 = geometryFactory.createPoint(new Coordinate(p.getX(), p.getY()));
+			Point targetPoint = (Point) JTS.transform(point2, transform);
 
-            ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
-            Map<String, Serializable> params = new HashMap<>();
-            params.put("url", file.toURL());
-            params.put("create spatial index", Boolean.TRUE);
-            ShapefileDataStore newDataStore = null;
-            newDataStore = (ShapefileDataStore) dataStoreFactory.createNewDataStore(params);
-            newDataStore.createSchema(simpleFeatureType);
-            newDataStore.forceSchemaCRS(CRS.decode("EPSG:3857", false));
+			// x, y to wyliczone indeksy dla csv na podstawie wspolrzednych
+			int x = (int) ((targetPoint.getX() - 48.802824) / 0.0378444945891919);
+			int y = (int) ((targetPoint.getY() - 13.236774) / 0.0378444945891919);
 
-            Transaction transaction = new DefaultTransaction("create");
-            String typeName = newDataStore.getTypeNames()[0];
-            SimpleFeatureSource featureSource = newDataStore.getFeatureSource(newDataStore.getTypeNames()[0]);
-            if (featureSource instanceof SimpleFeatureStore) {
-                SimpleFeatureStore featureStore = (SimpleFeatureStore) featureSource;
-                featureStore.setTransaction(transaction);
-                try {
-                    featureStore.addFeatures(collection);
-                    transaction.commit();
-                } catch (Exception problem) {
-                    problem.printStackTrace();
-                    transaction.rollback();
-                } finally {
-                    transaction.close();
-                }
-                System.exit(0); // success!
-            } else {
-                System.out.println(typeName + " does not support read/write access");
-                System.exit(1);
-            }
-        } catch (Exception e) {
-            System.err.println("Error during saving shapefile " + filename);
-            e.printStackTrace();
-        }
-    }
+			// temperaturka, wolalem zabezpieczyc zeby sie nic nie wysypalo
+			if (!temperature[x][y].equals("-9.99e+08")) {
+				point.setTemperature(Double.parseDouble(temperature[x][y]) - 273);
+			} else {
+				point.setTemperature(Double.parseDouble("-9.99e+08"));
+			}
 
-    /*
-    Funkcja sprawdza, czy istnieją pliki o takiej nazwie, jaką wybraliśmy.
-    Jeśli są to przenosi ich do nazwapliku + _old,
-    żeby w razie czego nie usunąć danych w przypadku błędu programu
-     */
-    public static void copyAndRemoveSHP(String filename) throws IOException {
-        List<String> extensionList = new ArrayList<String>();
-        extensionList.add(".dbf");
-        extensionList.add(".prj");
-        extensionList.add(".shp");
-        extensionList.add(".shx");
-        extensionList.add(".qpj");
-        extensionList.add(".qix");
-        for (String extension : extensionList) {
-            String nameWithoutExtension = filename.substring(0, filename.length() - 4);
-            Path filepath = Paths.get(nameWithoutExtension + extension);
-            File file = new File(nameWithoutExtension + extension);
-            if (file.exists()) {
-                Files.copy(filepath, Paths.get(filepath + "_old"), StandardCopyOption.REPLACE_EXISTING);
-                Files.delete(filepath);
-            }
-        }
-    }
+			// chmurki i opad
+			WeatherParams wp = new WeatherParams();
+			wp.setLowCloudFrac(Float.parseFloat(lowCloud[x][y]));
+			wp.setMedCloudFrac(Float.parseFloat(midCloud[x][y]));
+			wp.setHighCloudFrac(Float.parseFloat(highCloud[x][y]));
+			wp.setHighCloudFrac(Float.parseFloat(acmTotal[x][y]));
 
-    public void printList() {
-        System.out.println("List of points:");
-        for (PointFeature pf : pointFeatureList) {
-            pf.print();
-        }
-    }
+			point.setWeatherParams(wp);
+
+			//kalkulacja ogolnej pogody
+			point.setWeather();
+		}
+	}
+
+	public void fillCloudAndAcmArrays(BufferedReader br, String tempMax2m, String lowCloudFrac, String midCloudFrac,
+			String highCloudFrac, String acmTotalPercip, String line, String cvsSplitBy, String[][] temperature,
+			String[][] lowCloud, String[][] midCloud, String[][] highCloud, String[][] acmTotal) throws IOException {
+
+		br = new BufferedReader(new FileReader(tempMax2m));
+		int i = 0;
+
+		while ((line = br.readLine()) != null) {
+			String[] splitedLine = line.split(cvsSplitBy);
+			temperature[i] = splitedLine;
+			i++;
+		}
+
+		br = new BufferedReader(new FileReader(lowCloudFrac));
+		i = 0;
+
+		while ((line = br.readLine()) != null) {
+			String[] splitedLine = line.split(cvsSplitBy);
+			lowCloud[i] = splitedLine;
+			i++;
+		}
+
+		br = new BufferedReader(new FileReader(midCloudFrac));
+		i = 0;
+
+		while ((line = br.readLine()) != null) {
+			String[] splitedLine = line.split(cvsSplitBy);
+			midCloud[i] = splitedLine;
+			i++;
+		}
+
+		br = new BufferedReader(new FileReader(highCloudFrac));
+		i = 0;
+
+		while ((line = br.readLine()) != null) {
+			String[] splitedLine = line.split(cvsSplitBy);
+			highCloud[i] = splitedLine;
+			i++;
+		}
+
+		br = new BufferedReader(new FileReader(acmTotalPercip));
+		i = 0;
+
+		while ((line = br.readLine()) != null) {
+			String[] splitedLine = line.split(cvsSplitBy);
+			acmTotal[i] = splitedLine;
+			i++;
+		}
+	}
+
+	public void savePointsToSHP(String filename) {
+		try {
+			File file = new File(filename);
+			if (file.exists()) {
+				copyAndRemoveSHP(filename);
+			}
+
+			SimpleFeatureCollection collection = FeatureCollections.newCollection();
+			SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(simpleFeatureType);
+
+			for (PointFeature point : pointFeatureList) {
+				collection.add(point.getSimpleFeature());
+			}
+
+			ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
+			Map<String, Serializable> params = new HashMap<>();
+			params.put("url", file.toURL());
+			params.put("create spatial index", Boolean.TRUE);
+			ShapefileDataStore newDataStore = null;
+			newDataStore = (ShapefileDataStore) dataStoreFactory.createNewDataStore(params);
+			newDataStore.createSchema(simpleFeatureType);
+			newDataStore.forceSchemaCRS(CRS.decode("EPSG:3857", false));
+
+			Transaction transaction = new DefaultTransaction("create");
+			String typeName = newDataStore.getTypeNames()[0];
+			SimpleFeatureSource featureSource = newDataStore.getFeatureSource(newDataStore.getTypeNames()[0]);
+			if (featureSource instanceof SimpleFeatureStore) {
+				SimpleFeatureStore featureStore = (SimpleFeatureStore) featureSource;
+				featureStore.setTransaction(transaction);
+				try {
+					featureStore.addFeatures(collection);
+					transaction.commit();
+				} catch (Exception problem) {
+					problem.printStackTrace();
+					transaction.rollback();
+				} finally {
+					transaction.close();
+				}
+				System.exit(0); // success!
+			} else {
+				System.out.println(typeName + " does not support read/write access");
+				System.exit(1);
+			}
+		} catch (Exception e) {
+			System.err.println("Error during saving shapefile " + filename);
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * Funkcja sprawdza, czy istnieją pliki o takiej nazwie, jaką wybraliśmy.
+	 * Jeśli są to przenosi ich do nazwapliku + _old, żeby w razie czego nie
+	 * usunąć danych w przypadku błędu programu
+	 */
+	public static void copyAndRemoveSHP(String filename) throws IOException {
+		List<String> extensionList = new ArrayList<String>();
+		extensionList.add(".dbf");
+		extensionList.add(".prj");
+		extensionList.add(".shp");
+		extensionList.add(".shx");
+		extensionList.add(".qpj");
+		extensionList.add(".qix");
+		for (String extension : extensionList) {
+			String nameWithoutExtension = filename.substring(0, filename.length() - 4);
+			Path filepath = Paths.get(nameWithoutExtension + extension);
+			File file = new File(nameWithoutExtension + extension);
+			if (file.exists()) {
+				Files.copy(filepath, Paths.get(filepath + "_old"), StandardCopyOption.REPLACE_EXISTING);
+				Files.delete(filepath);
+			}
+		}
+	}
+
+	public void printList() {
+		System.out.println("List of points:");
+		for (PointFeature pf : pointFeatureList) {
+			pf.print();
+		}
+	}
 }

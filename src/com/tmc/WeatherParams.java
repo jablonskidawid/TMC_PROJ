@@ -7,6 +7,7 @@ public class WeatherParams {
     private float lowCloudFrac;
     private float medCloudFrac;
     private float highCloudFrac;
+    private float acmTotalPercip;
     //TODO: dowiedzieć się skąd brać info o opadach i dołożyć obsługę danych z odpowiednich plików
 
     public float getLowCloudFrac() {
@@ -31,5 +32,13 @@ public class WeatherParams {
 
     public void setHighCloudFrac(float highCloudFrac) {
         this.highCloudFrac = highCloudFrac;
+    }
+    
+    public float getAcmTotalPercip() {
+        return acmTotalPercip;
+    }
+
+    public void setAcmTotalPercip(float acmTotalPercip) {
+        this.acmTotalPercip = acmTotalPercip;
     }
 }

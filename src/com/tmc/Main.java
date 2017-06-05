@@ -15,7 +15,7 @@ public class Main {
 //        }
 //        List<PointFeature> pointList = SHPData.getPointsFromSHP(file.getAbsolutePath());
 
-        String sourceFilename = "example.shp";
+        String sourceFilename = "pon1.shp";
         String destFilename = "destexample.shp";
 
 
