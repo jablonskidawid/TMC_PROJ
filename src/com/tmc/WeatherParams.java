@@ -33,7 +33,7 @@ public class WeatherParams {
     public void setHighCloudFrac(float highCloudFrac) {
         this.highCloudFrac = highCloudFrac;
     }
-    
+
     public float getAcmTotalPercip() {
         return acmTotalPercip;
     }

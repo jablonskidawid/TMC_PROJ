@@ -95,30 +95,26 @@ public class PointFeature {
     }
 
     public void setWeather() {
-    	float lowCloudFrac = weatherParams.getLowCloudFrac();
+        float lowCloudFrac = weatherParams.getLowCloudFrac();
         float medCloudFrac = weatherParams.getMedCloudFrac();
         float highCloudFrac = weatherParams.getHighCloudFrac();
         float acmTotalPercip = weatherParams.getAcmTotalPercip();
-    	
-        if(lowCloudFrac < 10.0 && medCloudFrac < 10.0 && highCloudFrac < 10.0 && acmTotalPercip == 0.0) {
-        	setWeather(WeatherEnum.values()[0]);
-        	return;
-        }
-        else if(lowCloudFrac < 40.0 && medCloudFrac < 40.0 && highCloudFrac < 40.0 && acmTotalPercip == 0.0) {
-        	setWeather(WeatherEnum.values()[1]);
-        	return;
-        }
-        else if(acmTotalPercip == 0.0) {
-        	setWeather(WeatherEnum.values()[2]);
-        	return;
-        }
-        else if(acmTotalPercip < 0.5) {
-        	setWeather(WeatherEnum.values()[3]);
-        	return;
-        }
-        else {
-        	setWeather(WeatherEnum.values()[4]);
-        	return;
+
+        if (lowCloudFrac < 10.0 && medCloudFrac < 10.0 && highCloudFrac < 10.0 && acmTotalPercip == 0.0) {
+            setWeather(WeatherEnum.values()[0]);
+            return;
+        } else if (lowCloudFrac < 40.0 && medCloudFrac < 40.0 && highCloudFrac < 40.0 && acmTotalPercip == 0.0) {
+            setWeather(WeatherEnum.values()[1]);
+            return;
+        } else if (acmTotalPercip == 0.0) {
+            setWeather(WeatherEnum.values()[2]);
+            return;
+        } else if (acmTotalPercip < 0.5) {
+            setWeather(WeatherEnum.values()[3]);
+            return;
+        } else {
+            setWeather(WeatherEnum.values()[4]);
+            return;
         }
     }
 
