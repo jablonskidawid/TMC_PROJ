@@ -53,16 +53,15 @@ public class PointFeature {
 
     public void setTemperature(double temperature) {
         double tempRound = (double) Math.round(temperature);
-        String tempstr = String.valueOf(tempRound);
+        String tempstr = "0";
+        if (tempRound >= -40 && tempRound <= 40) {
+            tempstr = String.valueOf(tempRound);
+        }
         simpleFeature.setAttribute("temp", tempstr);
     }
 
     public Point getPoint() {
         return (Point) simpleFeature.getAttribute("the_geom");
-    }
-
-    public void setPoint(Point point) {
-        simpleFeature.setAttribute("the_geom", point);
     }
 
     public double getLon() {
