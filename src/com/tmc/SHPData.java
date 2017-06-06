@@ -127,7 +127,7 @@ public class SHPData {
             wp.setLowCloudFrac(Float.parseFloat(lowCloud[x][y]));
             wp.setMedCloudFrac(Float.parseFloat(midCloud[x][y]));
             wp.setHighCloudFrac(Float.parseFloat(highCloud[x][y]));
-            wp.setHighCloudFrac(Float.parseFloat(acmTotal[x][y]));
+            wp.setAcmTotalPercip(Float.parseFloat(acmTotal[x][y]));
 
             point.setWeatherParams(wp);
 
