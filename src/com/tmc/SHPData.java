@@ -293,4 +293,9 @@ public class SHPData {
             pf.print();
         }
     }
+    public void renamePoints(){
+        for (PointFeature pf : pointFeatureList) {
+            pf.renamePoint();
+        }
+    }
 }
