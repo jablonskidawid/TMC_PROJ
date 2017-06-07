@@ -7,40 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c7fe55e-471a-4db4-8007-08c599a3409c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/TMC_PROJ_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1.dbf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1.prj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1.qix" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1.qpj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1.shp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1.shx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1_out.dbf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1_out.fix" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1_out.prj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1_out.qix" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1_out.shp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon1_out.shx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon2.dbf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon2.prj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon2.qix" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon2.qpj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon2.shp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon2.shx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon3.dbf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon3.prj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon3.qix" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon3.qpj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon3.shp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pon3.shx" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/tmc/Main.java" afterPath="$PROJECT_DIR$/src/com/tmc/TMCImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ACM_TOTAL_PERCIP.csv" afterPath="$PROJECT_DIR$/ACM_TOTAL_PERCIP.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HIGH_CLOUD_FRACTION.csv" afterPath="$PROJECT_DIR$/HIGH_CLOUD_FRACTION.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LOW_CLOUD_FRACTION.csv" afterPath="$PROJECT_DIR$/LOW_CLOUD_FRACTION.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MID_CLOUD_FRACTION.csv" afterPath="$PROJECT_DIR$/MID_CLOUD_FRACTION.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TMAX2m.csv" afterPath="$PROJECT_DIR$/TMAX2m.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tmc/PointFeature.java" afterPath="$PROJECT_DIR$/src/com/tmc/PointFeature.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tmc/SHPData.java" afterPath="$PROJECT_DIR$/src/com/tmc/SHPData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tmc/TMCImpl.java" afterPath="$PROJECT_DIR$/src/com/tmc/TMCImpl.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +26,8 @@
       <file leaf-file-name="TMCImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tmc/TMCImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+            <state relative-caret-position="374">
+              <caret line="28" column="35" lean-forward="false" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -68,11 +38,11 @@
       <file leaf-file-name="SHPData.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tmc/SHPData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="253" column="17" lean-forward="false" selection-start-line="253" selection-start-column="17" selection-end-line="253" selection-end-column="17" />
+            <state relative-caret-position="180">
+              <caret line="242" column="34" lean-forward="false" selection-start-line="242" selection-start-column="34" selection-end-line="242" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+                <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
               </folding>
             </state>
           </provider>
@@ -81,7 +51,7 @@
       <file leaf-file-name="WeatherParams.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tmc/WeatherParams.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
+            <state relative-caret-position="323">
               <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
@@ -101,8 +71,8 @@
       <file leaf-file-name="PointFeature.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tmc/PointFeature.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="95" column="16" lean-forward="false" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="16" />
+            <state relative-caret-position="960">
+              <caret line="122" column="50" lean-forward="false" selection-start-line="122" selection-start-column="50" selection-end-line="122" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1613#1614#0" expanded="true" />
@@ -157,10 +127,10 @@
         <option value="$PROJECT_DIR$/src/com/tmc/WeatherEnum.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/com/tmc/WeatherParams.java" />
-        <option value="$PROJECT_DIR$/src/com/tmc/PointFeature.java" />
         <option value="$PROJECT_DIR$/src/com/tmc/Main.java" />
-        <option value="$PROJECT_DIR$/src/com/tmc/TMCImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/tmc/PointFeature.java" />
         <option value="$PROJECT_DIR$/src/com/tmc/SHPData.java" />
+        <option value="$PROJECT_DIR$/src/com/tmc/TMCImpl.java" />
       </list>
     </option>
   </component>
@@ -566,6 +536,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992566" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -576,7 +547,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39962825" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5631443" sideWeight="0.4974811" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5631443" sideWeight="0.4974811" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33773088" sideWeight="0.49747154" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -723,7 +694,7 @@
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -772,7 +743,7 @@
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -821,7 +792,7 @@
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -879,7 +850,7 @@
           <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -900,7 +871,7 @@
           <caret line="94" column="57" lean-forward="false" selection-start-line="94" selection-start-column="57" selection-end-line="94" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -985,7 +956,7 @@
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -1034,7 +1005,7 @@
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -1083,7 +1054,7 @@
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -1105,18 +1076,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tmc/WeatherParams.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tmc/PointFeature.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="95" column="16" lean-forward="false" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="16" />
+        <state relative-caret-position="960">
+          <caret line="122" column="50" lean-forward="false" selection-start-line="122" selection-start-column="50" selection-end-line="122" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1613#1614#0" expanded="true" />
@@ -1125,10 +1088,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tmc/WeatherParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tmc/TMCImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+        <state relative-caret-position="374">
+          <caret line="28" column="35" lean-forward="false" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1137,11 +1108,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tmc/SHPData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="253" column="17" lean-forward="false" selection-start-line="253" selection-start-column="17" selection-end-line="253" selection-end-column="17" />
+        <state relative-caret-position="180">
+          <caret line="242" column="34" lean-forward="false" selection-start-line="242" selection-start-column="34" selection-end-line="242" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1496817014639" expanded="false" signature="11095:11103" ph="&lt;~&gt;" />
+            <marker date="1496819142177" expanded="false" signature="11468:11476" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>

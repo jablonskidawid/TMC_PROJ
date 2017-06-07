@@ -46,10 +46,11 @@ public class SHPData {
     private final String MID_CLOUD_FRACTION = "MID_CLOUD_FRACTION.csv";
     private final String HIGH_CLOUD_FRACTION = "HIGH_CLOUD_FRACTION.csv";
     private final String ACM_TOTAL_PERCIP = "ACM_TOTAL_PERCIP.csv";
-    private final String SERVER_ADDRES = "http://www.ksgmet.eti.pg.gda.pl";
-    private final String FILE_PATH = "/prognozy/CSV/poland/2017/6/1/18/";
+
+
 
     public SHPData(String filename) throws Exception {
+
         pointFeatureList = new ArrayList<>();
 
         File file = new File(filename);
@@ -84,7 +85,7 @@ public class SHPData {
 //    	String saveDir = "E:/Projekty/TMC/projekt/tmc";
         String saveDir = ".";
 
-        downloadAllCsv(saveDir);
+     //   downloadAllCsv(saveDir);
 
         BufferedReader br = null;
         String line = "";
@@ -136,7 +137,15 @@ public class SHPData {
         }
     }
 
-    public void downloadAllCsv(String saveDir) {
+    public static void downloadAllCsv(String saveDir, String FILE_PATH) {
+        System.out.println("Pobieranie plików CSV");
+        final String SERVER_ADDRES = "http://www.ksgmet.eti.pg.gda.pl";
+        final String TMAX2m = "TMAX2m.csv";
+        final String LOW_CLOUD_FRACTION = "LOW_CLOUD_FRACTION.csv";
+        final String MID_CLOUD_FRACTION = "MID_CLOUD_FRACTION.csv";
+        final String HIGH_CLOUD_FRACTION = "HIGH_CLOUD_FRACTION.csv";
+        final String ACM_TOTAL_PERCIP = "ACM_TOTAL_PERCIP.csv";
+
         try {
             HttpCsvDownloader.downloadFile(SERVER_ADDRES + FILE_PATH + TMAX2m, saveDir);
         } catch (IOException ex) {
@@ -162,6 +171,7 @@ public class SHPData {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        System.out.println("Pobieranie zakonczone");
     }
 
     public void fillCloudAndAcmArrays(BufferedReader br, String tempMax2m, String lowCloudFrac, String midCloudFrac,
@@ -292,7 +302,8 @@ public class SHPData {
             pf.print();
         }
     }
-    public void renamePoints(){
+
+    public void renamePoints() {
         for (PointFeature pf : pointFeatureList) {
             pf.renamePoint();
         }

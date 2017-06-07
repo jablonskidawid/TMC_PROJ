@@ -119,7 +119,8 @@ public class PointFeature {
 
 
     public void print() {
-        System.out.println("Name: " + getName() + "   Lon: " + getLon() + "   Lat: " + getLat() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
+       // System.out.println("Name: " + getName() + "   Lon: " + getLon() + "   Lat: " + getLat() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
+        System.out.println("Name: " + getName() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
     }
     public void renamePoint(){
         String name=getName();
