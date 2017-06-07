@@ -252,7 +252,6 @@ public class SHPData {
                 } finally {
                     transaction.close();
                 }
-                System.exit(0); // success!
             } else {
                 System.out.println(typeName + " does not support read/write access");
                 System.exit(1);
