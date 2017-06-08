@@ -104,17 +104,23 @@ public class PointFeature {
 
     public void renamePoint() {
         String name = getName();
+        name = name.replaceAll(String.valueOf((char) 165), "A"); //Ą
         name = name.replaceAll(String.valueOf((char) 185), "a"); //ą
+        name = name.replaceAll(String.valueOf((char) 198), "c"); //Ć
         name = name.replaceAll(String.valueOf((char) 230), "c"); //ć
+        name = name.replaceAll(String.valueOf((char) 202), "E"); //Ę
         name = name.replaceAll(String.valueOf((char) 234), "e"); //ę
-        name = name.replaceAll(String.valueOf((char) 163), "L"); //duże ł
+        name = name.replaceAll(String.valueOf((char) 163), "L"); //Ł
         name = name.replaceAll(String.valueOf((char) 179), "l"); //ł
+        name = name.replaceAll(String.valueOf((char) 209), "N"); //Ń
         name = name.replaceAll(String.valueOf((char) 241), "n"); //ń
+        name = name.replaceAll(String.valueOf((char) 211), "O"); //Ó
         name = name.replaceAll(String.valueOf((char) 243), "o"); //ó
-        name = name.replaceAll(String.valueOf((char) 140), "S"); //duże ś
+        name = name.replaceAll(String.valueOf((char) 140), "S"); //Ś
         name = name.replaceAll(String.valueOf((char) 156), "s"); //ś
-        name = name.replaceAll(String.valueOf((char) 191), "z"); //ż
         name = name.replaceAll(String.valueOf((char) 175), "Z"); //Ż
+        name = name.replaceAll(String.valueOf((char) 191), "z"); //ż
+        name = name.replaceAll(String.valueOf((char) 143), "Z"); //Ź
         name = name.replaceAll(String.valueOf((char) 159), "z"); //ź
         setName(name);
     }
