@@ -8,7 +8,6 @@ public class WeatherParams {
     private float medCloudFrac;
     private float highCloudFrac;
     private float acmTotalPercip;
-    //TODO: dowiedzieć się skąd brać info o opadach i dołożyć obsługę danych z odpowiednich plików
 
     public float getLowCloudFrac() {
         return lowCloudFrac;

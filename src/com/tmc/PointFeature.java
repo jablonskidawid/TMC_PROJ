@@ -3,17 +3,12 @@ package com.tmc;
 import com.vividsolutions.jts.geom.Point;
 import org.opengis.feature.simple.SimpleFeature;
 
-/**
- * Created by User on 2017-05-18.
- */
 public class PointFeature {
 
     public final double INVALID_VALUE = -999;
 
-
     private SimpleFeature simpleFeature;
     private WeatherParams weatherParams;
-    private WeatherEnum weatherEnum;
 
     public SimpleFeature getSimpleFeature() {
         return simpleFeature;
@@ -23,20 +18,12 @@ public class PointFeature {
         this.simpleFeature = simpleFeature;
     }
 
-
     public String getName() {
         return (String) simpleFeature.getAttribute("name");
     }
 
     public void setName(String name) {
         simpleFeature.setAttribute("name", name);
-    }
-
-    public WeatherParams getWeatherParams() {
-        if (weatherParams == null) {
-            weatherParams = new WeatherParams();
-        }
-        return weatherParams;
     }
 
     public void setWeatherParams(WeatherParams weatherParams) {
@@ -80,7 +67,6 @@ public class PointFeature {
         }
     }
 
-
     public int getWeather() {
         String weatherstr = (String) simpleFeature.getAttribute("weather");
         if (!weatherstr.isEmpty()) {
@@ -89,8 +75,8 @@ public class PointFeature {
         return (int) INVALID_VALUE;
     }
 
-    public void setWeather(WeatherEnum weather) {
-        simpleFeature.setAttribute("weather", (long) weather.ordinal());
+    private void setWeather(WeatherEnum weather) {
+        simpleFeature.setAttribute("weather", String.valueOf(weather.ordinal()));
     }
 
     public void setWeather() {
@@ -101,41 +87,35 @@ public class PointFeature {
 
         if (lowCloudFrac < 10.0 && medCloudFrac < 10.0 && highCloudFrac < 10.0 && acmTotalPercip == 0.0) {
             setWeather(WeatherEnum.values()[0]);
-            return;
         } else if (lowCloudFrac < 40.0 && medCloudFrac < 40.0 && highCloudFrac < 40.0 && acmTotalPercip == 0.0) {
             setWeather(WeatherEnum.values()[1]);
-            return;
         } else if (acmTotalPercip == 0.0) {
             setWeather(WeatherEnum.values()[2]);
-            return;
         } else if (acmTotalPercip < 0.5) {
             setWeather(WeatherEnum.values()[3]);
-            return;
         } else {
             setWeather(WeatherEnum.values()[4]);
-            return;
         }
     }
 
-
     public void print() {
-       // System.out.println("Name: " + getName() + "   Lon: " + getLon() + "   Lat: " + getLat() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
-        System.out.println("Name: " + getName() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
+        System.out.println("Name: " + getName() + "   Lon: " + getLon() + "   Lat: " + getLat() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
     }
-    public void renamePoint(){
-        String name=getName();
-        name=name.replaceAll(String.valueOf((char)185),"a"); //ą
-        name=name.replaceAll(String.valueOf((char)230),"c"); //ć
-        name=name.replaceAll(String.valueOf((char)234),"e"); //ę
-        name=name.replaceAll(String.valueOf((char)163),"L"); //duże ł
-        name=name.replaceAll(String.valueOf((char)179),"l"); //ł
-        name=name.replaceAll(String.valueOf((char)241),"n"); //ń
-        name=name.replaceAll(String.valueOf((char)243),"o"); //ó
-        name=name.replaceAll(String.valueOf((char)140),"S"); //duże ś
-        name=name.replaceAll(String.valueOf((char)156),"s"); //ś
-        name=name.replaceAll(String.valueOf((char)191),"z"); //ż
-        name=name.replaceAll(String.valueOf((char)175),"Z"); //Ż
-        name=name.replaceAll(String.valueOf((char)159),"z"); //ź
+
+    public void renamePoint() {
+        String name = getName();
+        name = name.replaceAll(String.valueOf((char) 185), "a"); //ą
+        name = name.replaceAll(String.valueOf((char) 230), "c"); //ć
+        name = name.replaceAll(String.valueOf((char) 234), "e"); //ę
+        name = name.replaceAll(String.valueOf((char) 163), "L"); //duże ł
+        name = name.replaceAll(String.valueOf((char) 179), "l"); //ł
+        name = name.replaceAll(String.valueOf((char) 241), "n"); //ń
+        name = name.replaceAll(String.valueOf((char) 243), "o"); //ó
+        name = name.replaceAll(String.valueOf((char) 140), "S"); //duże ś
+        name = name.replaceAll(String.valueOf((char) 156), "s"); //ś
+        name = name.replaceAll(String.valueOf((char) 191), "z"); //ż
+        name = name.replaceAll(String.valueOf((char) 175), "Z"); //Ż
+        name = name.replaceAll(String.valueOf((char) 159), "z"); //ź
         setName(name);
     }
 }
