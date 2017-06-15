@@ -3,11 +3,20 @@ package com.tmc;
 import com.vividsolutions.jts.geom.Point;
 import org.opengis.feature.simple.SimpleFeature;
 
+/**
+ * Klasa reprezentująca punkt z shapefile'a
+ */
 public class PointFeature {
+    private final int INVALID_VALUE = -999;
 
-    public final double INVALID_VALUE = -999;
-
+    //Nazwy pól w simpleFeature
+    private static final String TEMP_KEY = "temp";
+    private static final String NAME_KEY = "name";
+    private static final String WEATHER_KEY = "weather";
+    private static final String COORDINATE_KEY = "the_geom";
+    //Obiekt kolekcji zawartej w shapefile - przechowuje wszystkie wartości danego punktu
     private SimpleFeature simpleFeature;
+    //Wartości pogodowe
     private WeatherParams weatherParams;
 
     public SimpleFeature getSimpleFeature() {
@@ -19,11 +28,11 @@ public class PointFeature {
     }
 
     public String getName() {
-        return (String) simpleFeature.getAttribute("name");
+        return (String) simpleFeature.getAttribute(NAME_KEY);
     }
 
     public void setName(String name) {
-        simpleFeature.setAttribute("name", name);
+        simpleFeature.setAttribute(NAME_KEY, name);
     }
 
     public void setWeatherParams(WeatherParams weatherParams) {
@@ -31,7 +40,7 @@ public class PointFeature {
     }
 
     public double getTemperature() {
-        String tempstr = (String) simpleFeature.getAttribute("temp");
+        String tempstr = (String) simpleFeature.getAttribute(TEMP_KEY);
         if (!tempstr.isEmpty()) {
             return Double.parseDouble(tempstr);
         }
@@ -44,11 +53,11 @@ public class PointFeature {
         if (tempRound >= -40 && tempRound <= 40) {
             tempstr = String.valueOf(tempRound);
         }
-        simpleFeature.setAttribute("temp", tempstr);
+        simpleFeature.setAttribute(TEMP_KEY, tempstr);
     }
 
     public Point getPoint() {
-        return (Point) simpleFeature.getAttribute("the_geom");
+        return (Point) simpleFeature.getAttribute(COORDINATE_KEY);
     }
 
     public double getLon() {
@@ -68,15 +77,15 @@ public class PointFeature {
     }
 
     public int getWeather() {
-        String weatherstr = (String) simpleFeature.getAttribute("weather");
+        String weatherstr = (String) simpleFeature.getAttribute(WEATHER_KEY);
         if (!weatherstr.isEmpty()) {
             return Integer.parseInt(weatherstr);
         }
-        return (int) INVALID_VALUE;
+        return INVALID_VALUE;
     }
 
     private void setWeather(WeatherEnum weather) {
-        simpleFeature.setAttribute("weather", String.valueOf(weather.ordinal()));
+        simpleFeature.setAttribute(WEATHER_KEY, String.valueOf(weather.ordinal()));
     }
 
     public void setWeather() {
@@ -99,7 +108,8 @@ public class PointFeature {
     }
 
     public void print() {
-        System.out.println("Name: " + getName() + "   Lon: " + getLon() + "   Lat: " + getLat() + "   Temp: " + getTemperature() + "   Weather: " + getWeather());
+        System.out.println(NAME_KEY + ": " + getName() + "   Lon: " + getLon() + "   Lat: " + getLat() + "   " + TEMP_KEY +
+                ": " + getTemperature() + "   " + WEATHER_KEY + ": " + getWeather());
     }
 
     public void renamePoint() {

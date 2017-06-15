@@ -7,7 +7,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Klasa odpowiadająca za pobieranie plików CSV z podanego zasobu
+ */
 public class HttpCsvDownloader {
+
+    private static final int BUFFER_SIZE = 1048576;
 
     public static boolean downloadFile(String fileURL, String saveDir) {
         try {
@@ -24,7 +29,7 @@ public class HttpCsvDownloader {
                 FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
                 int bytesRead;
-                byte[] buffer = new byte[1048576];
+                byte[] buffer = new byte[BUFFER_SIZE];
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                 }

@@ -45,6 +45,8 @@ public class SHPData {
     private List<PointFeature> pointFeatureList;
 
     //  parametry wykorzystywane do pobierania danych pogodowych
+    private final static String SOURCE_CRS = "EPSG:3857";
+    private final static String TARGET_CRS = "EPSG:3857";
     private final static String SERVER_ADDRES = "http://www.ksgmet.eti.pg.gda.pl";
     private static final String TMAX2m = "TMAX2m.csv";
     private static final String LOW_CLOUD_FRACTION = "LOW_CLOUD_FRACTION.csv";
@@ -52,6 +54,12 @@ public class SHPData {
     private static final String HIGH_CLOUD_FRACTION = "HIGH_CLOUD_FRACTION.csv";
     private static final String ACM_TOTAL_PERCIP = "ACM_TOTAL_PERCIP.csv";
     private static final String TEMP_NO_VALUE = "-9.99e+08";
+    private static final int CSV_ARRAY_ROWS = 170;
+    private static final int CSV_ARRAY_COLUMNS = 325;
+    private static final double CSV_LON_OFFSET = 48.802824;
+    private static final double CSV_LAT_OFFSET = 13.236774;
+    private static final double CSV_SIZE_OF_PIXEL = 0.0378444945891919;
+
 
     /**
      * Funkcja pobierająca dane z pliku shapefile
@@ -96,11 +104,11 @@ public class SHPData {
      * @throws Exception
      */
     public void processPointList() throws Exception {
-        String[][] temperature = new String[170][325];
-        String[][] lowCloud = new String[170][325];
-        String[][] midCloud = new String[170][325];
-        String[][] highCloud = new String[170][325];
-        String[][] acmTotal = new String[170][325];
+        String[][] temperature = new String[CSV_ARRAY_ROWS][CSV_ARRAY_COLUMNS];
+        String[][] lowCloud = new String[CSV_ARRAY_ROWS][CSV_ARRAY_COLUMNS];
+        String[][] midCloud = new String[CSV_ARRAY_ROWS][CSV_ARRAY_COLUMNS];
+        String[][] highCloud = new String[CSV_ARRAY_ROWS][CSV_ARRAY_COLUMNS];
+        String[][] acmTotal = new String[CSV_ARRAY_ROWS][CSV_ARRAY_COLUMNS];
 //        załadowanie danych z uprzednio pobranych plików CSV
         fillCloudAndAcmArrays(temperature, lowCloud, midCloud, highCloud, acmTotal);
 
@@ -108,7 +116,7 @@ public class SHPData {
             Point p = point.getPoint();
 
             // konwersja miedzy projekcjami
-            CoordinateReferenceSystem sourceCRS = CRS.decode("EPSG:3857");
+            CoordinateReferenceSystem sourceCRS = CRS.decode(SOURCE_CRS);
             CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
             MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
@@ -116,14 +124,14 @@ public class SHPData {
             Point targetPoint = (Point) JTS.transform(point2, transform);
 
             // x, y to wyliczone indeksy dla csv na podstawie wspolrzednych
-            int x = (int) ((targetPoint.getX() - 48.802824) / 0.0378444945891919);
-            int y = (int) ((targetPoint.getY() - 13.236774) / 0.0378444945891919);
+            int x = (int) ((targetPoint.getX() - CSV_LON_OFFSET) / CSV_SIZE_OF_PIXEL);
+            int y = (int) ((targetPoint.getY() - CSV_LAT_OFFSET) / CSV_SIZE_OF_PIXEL);
 
             // temperaturka, wolalem zabezpieczyc zeby sie nic nie wysypalo
             if (!temperature[x][y].equals(TEMP_NO_VALUE)) {
                 point.setTemperature(Double.parseDouble(temperature[x][y]) - 273);
             } else {
-                point.setTemperature(Double.parseDouble("-9.99e+08"));
+                point.setTemperature(Double.parseDouble(TEMP_NO_VALUE));
             }
 
             // chmurki i opad
@@ -245,7 +253,7 @@ public class SHPData {
             ShapefileDataStore newDataStore;
             newDataStore = (ShapefileDataStore) dataStoreFactory.createNewDataStore(params);
             newDataStore.createSchema(simpleFeatureType);
-            newDataStore.forceSchemaCRS(CRS.decode("EPSG:3857", false));
+            newDataStore.forceSchemaCRS(CRS.decode(TARGET_CRS, false));
 
             Transaction transaction = new DefaultTransaction("create");
             String typeName = newDataStore.getTypeNames()[0];

@@ -1,7 +1,7 @@
 package com.tmc;
 
 /**
- * Created by User on 2017-05-18.
+ * Klasa reprezentująca parametry pogodowe
  */
 public class WeatherParams {
     private float lowCloudFrac;
